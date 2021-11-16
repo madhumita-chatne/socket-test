@@ -16,6 +16,15 @@ io.on("connection", (socket: any) => {
     arr.push(`${socket.id} is now disconnected`);
     socket.broadcast.emit("status", arr);
   });
+
+  socket.on("get heartbeat", () => {
+    socket.broadcast.emit("send heartbeat")
+  })
+
+  socket.on('send heartbeat to client', (message: any) => {
+    console.log('message', message)
+    socket.broadcast.emit('heartbeat from other clients', message)
+  })
 });
 
 http.listen(4000, () => {
